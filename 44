@@ -1,0 +1,25 @@
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        sn, pn = len(s), len(p)
+        si = pi = 0
+        star_idx = -1
+        s_tmp_idx = -1
+        
+        while si < sn:
+            if pi < pn and (p[pi] == '?' or p[pi] == s[si]):
+                si += 1
+                pi += 1
+            elif pi < pn and p[pi] == '*':
+                star_idx = pi
+                s_tmp_idx = si
+                pi += 1
+            elif star_idx != -1:
+                pi = star_idx + 1
+                s_tmp_idx += 1
+                si = s_tmp_idx
+            else:
+                return False
+        
+        return all(p[i] == '*' for i in range(pi, pn))
+
+       
